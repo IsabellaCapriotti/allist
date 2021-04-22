@@ -1,0 +1,160 @@
+<html lang='en'>
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allist</title>
+    <link rel="stylesheet" href="{% static 'watchlist/colorThemes.css' %}">
+    <link rel="stylesheet" href="{% static 'watchlist/profileStyles.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Didact+Gothic&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+    <div class="pageContainer">
+        <div class="userHeader">
+            <h1 class="username">{{username}}</h1>
+            <h3 class="itemsCompleted">
+                <span class="bolderFont">Items Completed: </span>
+                {{itemsCompleted}} 
+            </h3>   
+            
+            <!-- If viewing someone else's profile, just display status -->
+            {% if not auth %}
+                <h3 class="status">
+                    <span class="bolderFont">Status: </span>
+                    {{status}}
+                </h3>     
+            {% endif %}    
+
+            <!-- If accessing own profile, allow them to change their status -->
+            {% if auth %}
+                <form class="changeStatusForm">
+
+                    <!-- Choice of action -->
+                    <label class="bolderFont" for='statusAction'> Status: </label>
+                    <select name="statusAction" id="statusAction">
+                        <option value="Watching">Watching</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Trying">Trying</option>
+                        <option value="Playing">Playing</option>
+                        <option value="Listening to">Listening to</option>
+                    </select>
+
+                    <!-- Choice of item (shows watch items by default, JS switches it according to action)-->
+                    <select name="statusItem" id="statusItem">
+                        {% for watchItem in watchList %}
+                            <option value="{{watchItem}}">{{watchItem}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="submit" id="changeStatusBtn" class="submitBtn" value="OK!">
+                </form>
+            {% endif %}
+
+                <nav class="navButtons">
+                    <!-- Home button -->
+                    <button class='navBtn homeBtn'>
+                        <span style="font-size: 2rem;" class="material-icons">
+                            home
+                        </span>
+                    </button>
+
+                    <!-- Logout button for authenticated users -->
+                    {% if auth %}
+                    <!-- <button class='navBtn logoutBtn'>
+                        <span style="font-size: 2rem;" class="material-icons">
+                            logout
+                        </span>
+                    </button> -->
+
+                    <!-- Settings button for authenticated users-->
+                    <button class='navBtn settingsBtn'>
+                        <span style="font-size: 2rem;" class="material-icons">
+                            settings
+                        </span>
+                    </button>
+                </nav>
+                
+                <!-- Settings side bar (hidden until settings button clicked) -->
+                <div class='hidden settingsBar'>
+                    <button class='navBtn closeSettingsBarBtn'>
+                        <span style="font-size: 2rem;" class="material-icons">
+                            clear
+                        </span>
+                    </button>
+
+                    <div class='settingsOptions'>
+                        <button id="changeThemeBtn" class='settingsBarBtn'>
+                            Change Theme
+                        </button>
+                        <button id='changeUsernameBtn' class='settingsBarBtn'>
+                            Change Username
+                        </button>
+                        <button id="logoutBtn" class='settingsBarBtn'>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+                {% endif %}
+        </div>
+
+        {% if auth %}
+        <!-- Overlay for theme selection (hidden by default)-->
+        <div class="hidden screenOverlay">
+            <div class="themeSelectWindow">
+                <h1 class="themeSelectHeader">Select Theme</h1>
+                <!-- Theme Selections -->
+                <div class="themeSelections">
+                    <div id="orangeTheme" class="themeBox"></div>
+                    <div id="greenTheme" class="themeBox"></div>
+                    <div id="blueTheme" class="themeBox"></div>
+                    <div id= "purpleTheme" class="themeBox"></div>
+                </div> 
+            </div>
+        </div>
+
+        <!-- Overlay for username change (hidden by default)-->
+        <div class="hidden screenOverlay">
+            <div class="changeUsernameWindow">
+                
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Recent activity -->
+        <div class="activity">
+            <h1 class="activityHeader">Recent Activity</h1>
+            {% for act in profileActivity%}
+                <div class="activityItem">
+                    <h4>{{act.date}}</h4>
+                    <h1>
+                        <!-- Added item to list -->
+                        {% if act.activityType == 's' %}
+                            {% if act.itemType == 'w' %}
+                            Wants to watch 
+                            {% elif act.itemType == 'r' %}
+                            Wants to read 
+                            {% elif act.itemType == 'l' %}
+                            Wants to listen to 
+                            {% elif act.itemType == 't' %}
+                            Wants to try
+                            {% elif act.itemType == 'p' %}
+                            Wants to play
+                            {% endif %}
+                        <!-- Marked item as complete -->
+                        {% else %}
+                        Finished
+                        {% endif %} 
+                        {{act.itemName}}
+                    </h1>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+  
+    <!-- ADD: VIEW ARCHIVE  -->
+    <script src="{% static 'watchlist/profile.js' %}"></script>
+</body>

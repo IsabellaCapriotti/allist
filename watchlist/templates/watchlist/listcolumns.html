@@ -1,0 +1,144 @@
+<html lang='en'>
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allist</title>
+    <link rel="stylesheet" href="{% static 'watchlist/colorThemes.css' %}">
+    <link rel="stylesheet" href="{% static 'watchlist/listcolumnStyles.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Didact+Gothic&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- List columns -->
+    <div class="colsContainer">
+        <div id="w" class="watchCol centeredCol">
+            <h1>watch</h1>
+
+            {% for watchItem in watchList %}
+                <div class="colItem" id="{{watchItem.id}}">
+                    <h3>{{watchItem.title}}</h3>
+                </div>
+            {% endfor %}
+
+            <button class="addBtn">+</button>
+        </div>
+
+        <div id="r" class="readCol centeredCol">
+            <h1>read</h1>
+
+            {% for readItem in readList %}
+                <div class="colItem" id="{{readItem.id}}">
+                    <h3>{{readItem.title}}</h3>
+                </div>
+            {% endfor %}
+
+            <button class="addBtn">+</button>
+        </div>
+
+        <div id="t" class="tryCol centeredCol">
+            <h1>try</h1>
+
+            {% for tryItem in tryList %}
+                <div class="colItem" id="{{tryItem.id}}">
+                    <h3>{{tryItem.title}}</h3>
+                </div>
+            {% endfor %}
+
+            <button class="addBtn">+</button>
+        </div>
+
+        <div id="p" class="playCol centeredCol">
+            <h1>play</h1>
+
+            {% for playItem in playList %}
+                <div class="colItem" id="{{playItem.id}}">
+                    <h3>{{playItem.title}}</h3>
+                </div>
+            {% endfor %}
+
+            <button class="addBtn">+</button>
+        </div>
+
+        <div id="l" class="listenCol centeredCol">
+            <h1>listen</h1>
+
+            {% for listenItem in listenList %}
+                <div class="colItem" id="{{listenItem.id}}">
+                    <h3>{{listenItem.title}}</h3>
+                </div>
+            {% endfor %}
+
+            <button class="addBtn">+</button>
+        </div>
+
+    </div>
+
+    <!-- Popup to add new item (hidden by default) -->
+    <div class="coverPage addItemCover hidden">
+        <div class="itemWindow addItem">
+            <h1 class="itemHeader addItemHeader">I want to...</h1>
+            <form class="itemForm addItemForm" action='{% url "additem" %}' method="POST">
+                {% csrf_token %}
+                {{listItemForm}}
+
+                <button class="submitBtn">OK!</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup to view list item (hidden by default)-->
+    <div class="coverPage viewItemCover hidden">
+
+        <!-- Item info -->
+        <div class="itemWindow viewItem">
+            <h1 class="itemHeader viewItemHeader">I want to...</h1>
+        
+            <!-- Buttons to mark as complete, edit -->
+            <div class="modifyItemButtonsContainer">
+                <button class="markCompleteBtn">
+                    <span class="material-icons" style="font-size: 3.5rem;">
+                    done
+                    </span>
+                </button>
+
+                <span class="material-icons doneConfirmed" style="display: none;">
+                    done_all
+                </span>
+
+                <button class="editItemBtn">
+                    <span class="material-icons" style="font-size: 3.5rem;">
+                        create
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+     <!-- Popup to edit item (hidden by default) -->
+     <div class="coverPage editItemCover hidden">
+        <div class="itemWindow editItem">
+            <h1 class="itemHeader editItemHeader">I want to...</h1>
+            <form class="itemForm editItemForm" action='{% url "edititem" %}' method="POST">
+                {% csrf_token %}
+                {{editForm}}
+
+                <button class="submitBtn editSubmitBtn">OK!</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Access user profile -->
+    <div class="profile">
+        <button class="profileBtn" id={{username}}>
+            <span class="material-icons profileIcon" style="font-size: 2rem;">
+                sentiment_satisfied
+            </span>
+        </button>
+    </div>
+    <script src="{% static 'watchlist/listcolumns.js' %}"></script>
+</body>
+
+</html>

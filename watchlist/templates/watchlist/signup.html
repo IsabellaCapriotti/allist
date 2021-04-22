@@ -1,0 +1,52 @@
+<html lang='en'>
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allist</title>
+    <link rel="stylesheet" href="{% static 'watchlist/signupStyles.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Didact+Gothic&family=Fredoka+One&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class = 'mainContainer'>
+        
+        <div class='siteTitle'>
+            <p>a</p>
+            <p>l</p>
+            <p>l</p>
+            <p class="orange">i</p>
+            <p class="orange">s</p>
+            <p class="orange">t</p>
+        </div>
+
+        <div class='colContainer'>
+            <div class = 'formContainer'>
+                
+                <form action='{% url "signup" %}' method="POST">
+                    {% csrf_token %}
+                    <h1 class="orange"> Sign Up </h1>
+                    
+                    {% if errorMessage %}
+                        <p class="message">{{errorMessage}}</p>
+                    {% endif %}
+
+                    <label for="username">Username: </label>
+                    <input class="entryInput" type="text" id="username" name="username" required="true" maxlength="40">
+                    <br>
+                    <label for="password">Password: </label>
+                    <input class="entryInput" type="password" id="password" name="password" required="true" maxlength="60">
+
+                    <br>
+
+                    <input class='submitBtn orange'type="submit" value="OK!">               
+                </form>       
+            </div>
+
+            <p class="message signinLink">Have we met before? <a href="{% url 'signin' %}">Sign in</a> instead!</p>
+        </div>
+    </div>
+
+</body>

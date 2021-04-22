@@ -1,0 +1,394 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0; 
+}
+
+
+/* List columns */ 
+/* For large screens: display each list as an equal column */ 
+.colsContainer{
+    display: grid;
+    grid-template-columns: repeat(5, 20vw);
+    grid-template-rows: 100%; 
+    height: 100vh; 
+}
+
+.watchCol{
+    background-color: var(--orange1);
+}
+
+.readCol{
+    background-color: var(--orange2);
+}
+
+.tryCol{
+    background-color: var(--orange3);
+}
+
+.listenCol{
+    background-color: var(--orange4);
+}
+
+.playCol{
+    background-color: var(--orange5);
+}
+
+/* For small screens: display each list as an equal row*/ 
+@media only screen and (max-width: 870px){
+
+    .colsContainer{
+        grid-template-rows: repeat(5, 20vh);
+        grid-template-columns: 100vw;
+    }
+
+    .watchCol{
+        grid-row: 1 / span 1; 
+    }
+}
+
+.colsContainer h1{
+    font-family: 'Fredoka One', Helvetica, sans-serif;
+    margin-left: 8%;
+    margin-bottom: 2rem;
+    align-self: flex-start;
+    font-size: 2.5rem;
+}
+
+.centeredCol{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden; 
+}
+
+.addBtn{
+    background: none;
+    border: none;
+    font-family: 'Fredoka One', Helvetica, sans-serif;
+    color: var(--orangeAccentText);
+    font-size: 4rem;
+    transition: transform 1s; 
+}
+
+.addBtn:hover{
+    cursor: pointer; 
+}
+
+.addBtn:active{
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.addBtn:focus{
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/* Popup to add new item */ 
+.coverPage{
+    width: 100vw; 
+    height: 100vh; 
+    background-color: rgba(0,0,0,.6);
+    position: absolute;
+    top: 0px; 
+
+    display: flex;
+    flex-flow: row; 
+    justify-content: center;
+    align-items: center;
+}
+
+
+.itemWindow{
+    background-color: var(--orangebg);
+    border-radius: 10px; 
+    padding: 2rem;
+    width: 70%; 
+    height: 70%; 
+    display: flex;
+    flex-flow: column; 
+    z-index: 1;
+    position: relative; 
+}
+
+.hidden{
+    display: none;
+}
+
+/* Form */ 
+.itemHeader{
+    font-family: 'Fredoka One', Helvetica, sans-serif;
+    color: var(--orangeMainText);
+    font-size: 2rem;
+    margin-bottom: 5%;
+}
+
+.itemForm{
+    display: flex;
+    flex-flow: column; 
+}
+
+.itemForm label{
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 400; 
+    font-size: 1.5rem;
+}
+
+.itemForm input[type="text"], .itemForm input[type="url"]{
+    width: 75%;
+    height: 1.8rem;
+}
+
+.itemForm .hiddenSelect{
+    display: flex;
+    flex-flow: row; 
+    width: 30%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.itemForm textarea{
+    resize: none;
+    width: 75%;
+}
+
+
+.submitBtn{
+    align-self: center;
+    padding: 5px;
+    font-size: 2rem;
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 600;
+    border: none;
+    background: none;
+    color: var(--orangeMainText);
+    position: absolute; 
+    bottom: 5%; 
+}
+
+.submitBtn:active{
+    border: none;
+    background: none;
+    outline: none;
+}
+.submitBtn:focus{
+    border: none;
+    background: none;
+    outline: none;
+}
+.submitBtn:hover{
+    color: var(--orangeAccentText);
+    cursor: pointer; 
+}
+
+.errorMessage{
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem; 
+    transition: color 1s linear; 
+}
+
+
+/* List items */ 
+.colItem{
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem; 
+}
+
+.colItem:hover{
+    text-shadow: 2px 2px 3px #191B25; 
+    cursor: pointer;
+}
+
+.listItemInfoContainer{
+    display: flex;
+    flex-flow: column; 
+    padding: 3rem;
+    align-items: flex-start;
+}
+
+.listItemInfoContainer h1{
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.listItemInfoContainer p, .listItemInfoContainer a{
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 400;
+    font-size: 1.3rem; 
+}
+
+.modifyItemButtonsContainer{
+    display: flex; 
+    flex-flow: row; 
+    justify-content: space-between;
+    align-items: center;
+    width: 20%; 
+
+    position: absolute; 
+    right: 10%; 
+    bottom: 2%; 
+}
+
+.markCompleteBtn, .editItemBtn, .profileBtn{
+    background: none;
+    border: none;
+}
+
+.markCompleteBtn:active, .editItemBtn:active, .profileBtn:active{
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.markCompleteBtn:focus, .editItemBtn:focus, .profileBtn:focus{
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.markCompleteBtn:hover, .editItemBtn:hover{
+    color: var(--orangeAccentText);
+    cursor: pointer; 
+}
+
+
+/* User profile icon*/ 
+.profile{
+    position: absolute;
+    right: 2%; 
+    top: 2%; 
+}
+
+.profileBtn{
+    color: var(--orangeAccentText); 
+}
+
+.profileBtn:hover{
+    cursor: pointer;
+}
+
+
+/* Color variations for themes */ 
+
+/* Orange */ 
+.orangeThemeCol1{
+    background-color: var(--orange1);
+}
+.orangeThemeCol2{
+    background-color: var(--orange2);
+}
+.orangeThemeCol3{
+    background-color: var(--orange3);
+}
+.orangeThemeCol4{
+    background-color: var(--orange4);
+}
+.orangeThemeCol5{
+    background-color: var(--orange5);
+}
+.orangeThemeBG{
+    background-color: var(--orangebg);
+}
+.orangeThemeMainText{
+    color: var(--orangeMainText); 
+}
+.orangeThemeAccentText{
+    color: var(--orangeAccentText); 
+}
+.orangeThemeAccentHover:hover{
+    color: var(--orangeAccentText); 
+}
+
+/* Purple */ 
+.purpleThemeCol1{
+    background-color: var(--purple1);
+}
+.purpleThemeCol2{
+    background-color: var(--purple2);
+}
+.purpleThemeCol3{
+    background-color: var(--purple3);
+}
+.purpleThemeCol4{
+    background-color: var(--purple4);
+}
+.purpleThemeCol5{
+    background-color: var(--purple5);
+}
+.purpleThemeBG{
+    background-color: var(--purplebg);
+}
+.purpleThemeMainText{
+    color: var(--purpleMainText); 
+}
+.purpleThemeAccentText{
+    color: var(--purpleAccentText); 
+}
+.purpleThemeAccentHover:hover{
+    color: var(--purpleAccentText); 
+}
+
+/* Green */ 
+.greenThemeCol1{
+    background-color: var(--green1);
+}
+.greenThemeCol2{
+    background-color: var(--green2);
+}
+.greenThemeCol3{
+    background-color: var(--green3);
+}
+.greenThemeCol4{
+    background-color: var(--green4);
+}
+.greenThemeCol5{
+    background-color: var(--green5);
+}
+.greenThemeBG{
+    background-color: var(--greenbg);
+}
+.greenThemeMainText{
+    color: var(--greenMainText); 
+}
+.greenThemeAccentText{
+    color: var(--greenAccentText); 
+}
+.greenThemeAccentHover:hover{
+    color: var(--greenAccentText); 
+}
+
+/* Blue */ 
+.blueThemeCol1{
+    background-color: var(--blue1);
+}
+.blueThemeCol2{
+    background-color: var(--blue2);
+}
+.blueThemeCol3{
+    background-color: var(--blue3);
+}
+.blueThemeCol4{
+    background-color: var(--blue4);
+}
+.blueThemeCol5{
+    background-color: var(--blue5);
+}
+.blueThemeBG{
+    background-color: var(--bluebg);
+}
+.blueThemeMainText{
+    color: var(--blueMainText); 
+}
+.blueThemeAccentText{
+    color: var(--blueAccentText); 
+}
+.blueThemeAccentHover:hover{
+    color: var(--blueAccentText); 
+}
