@@ -149,7 +149,7 @@ nav{
     align-items: center;
 }
 
-.themeSelectWindow{
+.optionSelectWindow{
     width: 60%; 
     height: 40%; 
     background-color: var(--orangebg); 
@@ -157,6 +157,7 @@ nav{
     flex-flow: column; 
     align-items: center;
     border-radius: 10px; 
+    position: relative;
 }
 
 .themeSelectHeader{
@@ -234,6 +235,43 @@ nav{
 .activityItem h1{
     font-family: 'Baloo Tammudu 2', sans-serif; 
     font-weight: 600; 
+    font-size: 1.4rem;
+}
+
+
+/* Change username */ 
+#changeUsernameForm{
+    display: flex;
+    flex-flow: column; 
+    align-items: center;
+    justify-content: center;
+}
+
+#changeUsernameWindow{
+    justify-content: space-evenly;
+}
+
+.newUsernameLabel{
+    align-self: flex-start;
+    transform: translateX(-10%); 
+    font-family: 'Baloo Tammudu 2', sans-serif; 
+    font-weight: 400; 
+    font-size: 1.4rem; 
+    color: var(--orangeMainText); 
+}
+
+#changeUsernameForm input[type="text"]{
+    margin-right: 1%; 
+    font-family: 'Baloo Tammudu 2', sans-serif; 
+    font-size: 1rem;
+    border-color: var(--orangeAccentText);
+    border-radius: 8px; 
+    border-style: solid;
+    padding: 0 10px;
+}
+
+.errorMessage{
+    font-family: 'Baloo Tammudu 2', sans-serif; 
     font-size: 1.4rem;
 }
 

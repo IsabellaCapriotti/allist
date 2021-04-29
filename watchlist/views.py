@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.db import IntegrityError
 from django.shortcuts import redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 
 from .models import ListItem, UserProfileInfo, ProfileActivity
@@ -11,6 +11,7 @@ from .forms import ListItemForm
 
 from datetime import date
 import random
+import re
 
 ############################################################################
 # HOME PAGE AND LISTS PAGE
@@ -80,6 +81,13 @@ def signup(request):
     if request.method == 'POST':
         userData = request.POST
 
+        # Check that username and password are valid
+        if not isValidUsernameOrPassword(userData['username']):
+            return render(request, 'watchlist/signup.html', {'errorMessage': 'Please enter a username containing between 3 and 30 alphanumeric characters.'})
+        elif not isValidUsernameOrPassword(userData['password'], True):
+            return render(request, 'watchlist/signup.html', {'errorMessage': 'Please enter a password containing between 10 and 30 alphanumeric characters.'})
+
+
         # Create new user and log them in 
         # Create the new settings profile as well 
         try:
@@ -129,8 +137,41 @@ def change_un(request):
     if not request.user.is_authenticated:
         return redirect('/signup/')
 
+    # Get current user and requested username
+    currUser = request.user
+    newUN = request.POST['newUN']
     
-    return HttpResponse("you changed it")
+    response = {
+        'valid': True,
+        'message': 'Username updated!',
+        'newUN': newUN
+    }
+
+    # Check if new username is valid (doesn't already exist in database)
+    matchingUsername = User.objects.filter(username=newUN)
+    
+    # If username is already taken, do not update and send back an error message
+    if len(matchingUsername) != 0:
+        response['valid'] = False
+        response['message'] = 'Error: this username is already taken!'
+    
+    # Also, if the username was blank, send back a different error message
+    elif len(newUN) == 0:
+        response['valid'] = False
+        response['message'] = 'Error: please do not leave the username field blank.'
+
+    # Test for username validity 
+    elif not isValidUsernameOrPassword(newUN):
+        response['valid'] = False
+        response['message'] = 'Please enter a username containing between 3 and 30 alphanumeric characters.'
+    
+    # If you got a valid username, update it in the database
+    else:
+        currUser.username = newUN
+        currUser.save()
+    
+
+    return JsonResponse(response)
 
 ############################################################################
 
@@ -322,6 +363,16 @@ def findItemsByQuery(request):
     data = serializers.serialize("json", foundItems)
 
     return HttpResponse(data)
+
+
+# Delete a list item
+def deleteitem(request, itemid):
+
+    # Delete item at specified id
+    foundItem = ListItem.objects.get(id=itemid)
+    foundItem.delete()  
+
+    return HttpResponse(str(itemid) + " deleted.")
 ############################################################################
 
 
@@ -364,7 +415,7 @@ def profile(request, username):
     context['tryList'] = ListItem.objects.filter(user=currUser, itemType='t', isArchived=False)
 
     # Get profile activity for this user
-    context['profileActivity'] = ProfileActivity.objects.filter(user=currUser, hidden=False)
+    context['profileActivity'] = ProfileActivity.objects.filter(user=profileUser, hidden=False)
     # Sort by date
     context['profileActivity'] = mergeSort(0, len(context['profileActivity']), list(context['profileActivity']))
     
@@ -460,4 +511,9 @@ def mergeSort(left, right, l):
     
 
 
-    
+def isValidUsernameOrPassword(un, pw=False):
+    if pw:
+        regex = re.compile("^[a-z0-9_-]{10,30}$")
+    else:
+        regex = re.compile("^[a-z0-9_-]{3,30}$")
+    return re.fullmatch(regex, un)

@@ -61,15 +61,9 @@
                         </span>
                     </button>
 
-                    <!-- Logout button for authenticated users -->
-                    {% if auth %}
-                    <!-- <button class='navBtn logoutBtn'>
-                        <span style="font-size: 2rem;" class="material-icons">
-                            logout
-                        </span>
-                    </button> -->
-
+    
                     <!-- Settings button for authenticated users-->
+                {% if auth %}
                     <button class='navBtn settingsBtn'>
                         <span style="font-size: 2rem;" class="material-icons">
                             settings
@@ -102,8 +96,8 @@
 
         {% if auth %}
         <!-- Overlay for theme selection (hidden by default)-->
-        <div class="hidden screenOverlay">
-            <div class="themeSelectWindow">
+        <div id="hideTheme" class="hidden screenOverlay">
+            <div id="themeSelectWindow" class="optionSelectWindow">
                 <h1 class="themeSelectHeader">Select Theme</h1>
                 <!-- Theme Selections -->
                 <div class="themeSelections">
@@ -116,9 +110,14 @@
         </div>
 
         <!-- Overlay for username change (hidden by default)-->
-        <div class="hidden screenOverlay">
-            <div class="changeUsernameWindow">
-                
+        <div id="hideChangeUN" class="hidden screenOverlay">
+            <div id="changeUsernameWindow" class="optionSelectWindow">
+                <h1 class="themeSelectHeader">Change Username</h1>
+                <form id="changeUsernameForm">
+                    <label class="newUsernameLabel" for="newUsername">New username: </label>
+                    <input id="newUsername" name="newUsername" type="text">
+                    <input id="updateUsernameBtn" class="submitBtn" type="submit" value='OK!'>
+                </form>
             </div>
         </div>
         {% endif %}

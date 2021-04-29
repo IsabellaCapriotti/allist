@@ -117,7 +117,6 @@ submitBtn.addEventListener('click', (e) => {
     if(isProfileHidden.checked){
         isProfileHiddenVal = "True"; 
     }
-    console.log(isProfileHiddenVal); 
 
     // Send POST request to /additem/ page
     let destination = window.location.origin + '/additem/';
@@ -391,7 +390,7 @@ editBtn.addEventListener( 'click', (e) => {
     }
 
     itemID = itemID.substr(0, itemID.indexOf('edit')); 
- 
+
     // Get parent column name to show in popup
     let header = document.querySelector(".editItemHeader"); 
     let entryItem = document.getElementById(itemID); 
@@ -460,6 +459,51 @@ editBtn.addEventListener( 'click', (e) => {
 
         xhttp.send(`title=${title}&url=${url}&notes=${notes}&id=${id}&isProfileHidden=${visibilityValue}`); 
 
+        // Once you get a valid response, update the title of the entry on the page
+        xhttp.addEventListener("readystatechange", function(){
+            
+            if(this.readyState == 4 && this.status == 200){
+                // Get matching column item, change text
+                const columnItem = document.getElementById(itemID); 
+                columnItem.innerText = title; 
+            }
+        });
+
+    }); 
+
+});
+
+// ***************************************************************
+// Event listener for button to delete item
+const deleteItemBtn = document.querySelector(".deleteItemBtn"); 
+
+deleteItemBtn.addEventListener( "click", (e) => {
+
+    // Get ID of list item to delete
+    let itemID = 0; 
+    let infoContainer = document.querySelector(".listItemInfoContainer"); 
+    itemID = infoContainer.id.substr(0, infoContainer.id.indexOf("info")); 
+    
+    // Send request to delete
+    let xhttp = new XMLHttpRequest(); 
+    let destination = window.location.origin + '/deleteitem/' + itemID; 
+    xhttp.open('GET', destination); 
+    xhttp.send(); 
+
+    xhttp.addEventListener("readystatechange", function(){
+        if(this.readyState == 4 && this.status == 200){
+            // After deletion, remove list item from page
+            const listItem = document.getElementById(itemID); 
+            listItem.remove(); 
+
+            // Close edit window
+            let allPopups = document.querySelectorAll(".coverPage"); 
+            for(let i=0; i < allPopups.length; i++){
+                if(!allPopups[i].classList.contains("hidden")){
+                    allPopups[i].classList.add("hidden"); 
+                }
+            }
+        }
     }); 
 
 });
@@ -563,6 +607,7 @@ xhttp.addEventListener( 'readystatechange', function(){
         const markCompleteBtns = document.querySelectorAll(".markCompleteBtn"); 
         const editBtns = document.querySelectorAll(".editItemBtn"); 
         const profileBtn = document.querySelector(".profileBtn"); 
+        const deleteBtns = document.querySelectorAll(".deleteItemBtn"); 
 
 
         // Apply styles based on theme
@@ -592,6 +637,11 @@ xhttp.addEventListener( 'readystatechange', function(){
         for(let i=0; i < editBtns.length; i++){
             editBtns[i].classList.add(`${themeName}AccentHover`); 
         }
+        for(let i=0; i < deleteBtns.length; i++){
+            deleteBtns[i].classList.add(`${themeName}AccentHover`); 
+        }
         profileBtn.classList.add(`${themeName}AccentText`); 
+
+        
     }
 }); 

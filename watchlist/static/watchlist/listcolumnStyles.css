@@ -236,24 +236,24 @@
     bottom: 2%; 
 }
 
-.markCompleteBtn, .editItemBtn, .profileBtn{
+.markCompleteBtn, .editItemBtn, .profileBtn, .deleteItembtn{
     background: none;
     border: none;
 }
 
-.markCompleteBtn:active, .editItemBtn:active, .profileBtn:active{
-    border: none;
-    background: none;
-    outline: none;
-}
-
-.markCompleteBtn:focus, .editItemBtn:focus, .profileBtn:focus{
+.markCompleteBtn:active, .editItemBtn:active, .profileBtn:active, .deleteItembtn{
     border: none;
     background: none;
     outline: none;
 }
 
-.markCompleteBtn:hover, .editItemBtn:hover{
+.markCompleteBtn:focus, .editItemBtn:focus, .profileBtn:focus, .deleteItembtn:focus{
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.markCompleteBtn:hover, .editItemBtn:hover, .deleteItembtn:hover{
     color: var(--orangeAccentText);
     cursor: pointer; 
 }

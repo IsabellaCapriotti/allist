@@ -12,6 +12,7 @@ urlpatterns = [
     path('additem/', views.additem, name='additem'),
     path('getitem/<int:itemid>/', views.getitem, name='getitem'),
     path('markcomplete/<int:itemid>/', views.markcomplete, name='markcomplete'),
+    path('deleteitem/<int:itemid>/', views.deleteitem, name='deleteitem'),
     path('edititem/', views.edititem, name='edititem'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path('findbyquery/', views.findItemsByQuery, name='findbyquery'),
