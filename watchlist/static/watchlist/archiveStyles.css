@@ -31,13 +31,29 @@
 
 /* Timeline */ 
 .timeline{
-    overflow-y: auto;
+    /*overflow-y: auto;*/
+    overflow: visible; 
     display: flex;
     flex-flow: column; 
     align-items: center;
     justify-content: flex-start;
 }
 
+/* Month lines */
+.monthline{
+    position: relative; 
+    background-color: white;
+    height: 15px;
+    width: 15vw; 
+    overflow: visible; 
+}
+
+.monthlabel{
+   position: absolute; 
+   right: 17vw; 
+   font-family: 'Fredoka One', Helvetica, sans-serif;
+    font-size: 1.7rem;
+}
 
 /* Information tooltip */
 .tooltip{
@@ -71,6 +87,36 @@
 
 .hidden{
     display: none; 
+}
+
+/* User profile icon*/ 
+.profile{
+    position: absolute;
+    right: 2%; 
+    top: 2%; 
+}
+
+.profileBtn{
+    color: var(--orangeAccentText); 
+    background: none;
+    border: none;
+}
+
+.profileBtn:hover{
+    cursor: pointer;
+}
+
+
+.profileBtn:active{
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.profileBtn:focus{
+    border: none;
+    background: none;
+    outline: none;
 }
 
 

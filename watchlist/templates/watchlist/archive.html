@@ -14,6 +14,8 @@
 <body>
 
     <div class="pageContainer">
+
+        <!-- Header -->
         <div id="archiveHeader">
             <div class="headerLetter">A</div>
             <div class="headerLetter">R</div>
@@ -23,7 +25,18 @@
             <div class="headerLetter">V</div>
             <div class="headerLetter">E</div>
         </div>
+
+        <!-- Timeline -->
         <div class="timeline"></div>
+
+        <!-- Access user profile -->
+        <div class="profile">
+            <button class="profileBtn" id={{username}}>
+                <span class="material-icons profileIcon" style="font-size: 2rem;">
+                    sentiment_satisfied
+                </span>
+            </button>
+        </div>  
     </div>
 
     <script src="https://d3js.org/d3.v6.min.js"></script>

@@ -41,6 +41,7 @@ window.addEventListener('load', () => {
             // Get elements to style
             const container = document.querySelector(".pageContainer"); 
             const headerLetters = document.querySelectorAll(".headerLetter"); 
+            const profileBtn = document.querySelector(".profileBtn"); 
 
             // Add theme styles
             container.classList.add(`${themeName}Bg`); 
@@ -48,6 +49,9 @@ window.addEventListener('load', () => {
             for(let i=0; i < headerLetters.length; i++){
                 headerLetters[i].classList.add(`${themeName}MainText`); 
             }
+
+            profileBtn.classList.add(`${themeName}AccentText`); 
+            
         }
     }); 
 
@@ -82,6 +86,28 @@ window.addEventListener('load', () => {
 
 // ################################################################################
 
+// ***************************************************************
+// Button to access user profile 
+
+// Switch to other icon on hover
+let profileIcon = document.querySelector('.profileIcon'); 
+
+profileIcon.addEventListener( 'mouseover', (e) => {
+    e.target.innerText = 'sentiment_very_satisfied'; 
+});
+
+profileIcon.addEventListener( 'mouseout', (e) => {
+    e.target.innerText = 'sentiment_satisfied'; 
+}); 
+
+// Send to profile on click
+profileIcon.addEventListener( 'click', (e) => {
+
+    let username = document.querySelector(".profileBtn").id; 
+    let destination = window.location.origin + '/profile/' + username + '/'; 
+
+    window.location.href = destination; 
+}); 
 
 // ################################################################################
 /* LOAD TIMELINE */ 
@@ -91,19 +117,72 @@ function drawTimeLine(){
         return; 
     }
 
-
     // Color counter
     let colorCounter = 1; 
 
     // Current ID 
     let currID; 
 
-    // Maybe split into/label by months? 
-    let timeline = document.querySelector(".timeline"); 
+    // Current month and year
+    let currMonth; 
+    let prevMonth; 
+    let currYear; 
 
+    // Month names
+    const monthNames = {
+        '01': 'January',
+        '02': 'February',
+        '03': 'March',
+        '04': 'April',
+        '05': 'May',
+        '06': 'June',
+        '07': 'July',
+        '08': 'August',
+        '09': 'September',
+        '10': 'October',
+        '11': 'November',
+        '12': 'December'
+    }
+
+    let timeline = document.querySelector(".timeline"); 
+    
     // Draw portion of the line for every archived item 
     for(let i=0; i < data.length; i++){
     
+        // Get month, setting initial prev month if this is the first segment
+        currMonth = data[i]['fields']['dateFinished'].slice(5,7) 
+        currYear = data[i]['fields']['dateFinished'].slice(0, 4)
+        if(i == 0){
+            prevMonth = currMonth; 
+        }
+    
+        // Check to see if you've entered a new month
+        if(i == 0 || prevMonth != currMonth){
+            console.log("new month on date " + data[i]['fields']['dateFinished'])
+            
+            // Create divider line for new month
+            let monthLine = document.createElement("div"); 
+            monthLine.classList.add("monthLine"); 
+            timeline.appendChild(monthLine); 
+            let monthLineLocation = monthLine.getBoundingClientRect(); 
+
+            // Create label for new month
+            let monthLabel = document.createElement("h1"); 
+            monthLabel.classList.add("monthlabel"); 
+            monthLabel.innerText = monthNames[currMonth] + ' ' + currYear;
+            /*
+            monthLabel.style.right = monthLineLocation['x'] + (.15 * window.innerWidth); 
+            monthLabel.style.top = monthLineLocation['y'] - window.pageYOffset; 
+            */
+           
+            monthLine.appendChild(monthLabel);   
+        }
+        else{
+            console.log("no new month on date " + data[i]['fields']['dateFinished'])
+        }
+        prevMonth = currMonth; 
+
+
         // Create segment 
         currID = data[i]['pk']; 
         let newSeg = document.createElement("div"); 
@@ -217,7 +296,7 @@ function drawTimeLine(){
 
                 // Position tooltip 
                 tooltip.style.top = newSeg.getBoundingClientRect()['y'] - window.pageYOffset; 
-                tooltip.style.left = newSeg.getBoundingClientRect()['x'] + vp15Per + 10; //70; 
+                tooltip.style.left = newSeg.getBoundingClientRect()['x'] + vp15Per + 10;  
             }
 
         }); 

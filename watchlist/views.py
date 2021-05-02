@@ -476,7 +476,7 @@ def getuserinfo(request):
 ############################################################################
 # ARCHIVE
 def archive(request):
-    return render(request, 'watchlist/archive.html')
+    return render(request, 'watchlist/archive.html', {'username': request.user.username})
 
 
 ############################################################################
