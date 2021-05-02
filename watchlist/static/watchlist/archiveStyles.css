@@ -1,0 +1,240 @@
+*{
+    box-sizing: border-box;
+    margin: 0; 
+    padding: 0; 
+}
+
+.pageContainer{
+    width: 100vw; 
+    height: 100vh; 
+    background-color: var(--orangebg);
+    overflow-y: auto;
+    display: flex;
+    flex-flow: row; 
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* Header */
+#archiveHeader{
+    position: fixed;
+    left: 0px; 
+    margin-top: 5%;
+    margin-left: 5%;  
+}
+
+.headerLetter{
+    font-family: 'Fredoka One', Helvetica, sans-serif;
+    font-size: 3rem;
+    color: var(--orangeMainText); 
+}
+
+/* Timeline */ 
+.timeline{
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column; 
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+/* Information tooltip */
+.tooltip{
+    background-color: white;
+    border: 2px solid var(--orangeAccentText); 
+    border-radius: 8px; 
+    padding: 5px; 
+    min-width: 120px; 
+    min-height: 120px; 
+    position: fixed; 
+}
+
+.tooltip h3{
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 600; 
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.tooltipBold{
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 600; 
+    font-size: 1rem;
+}
+
+.tooltipRegular{
+    font-family: 'Baloo Tammudu 2', sans-serif;
+    font-weight: 400; 
+    font-size: 1rem;
+}
+
+.hidden{
+    display: none; 
+}
+
+
+/* Color Modifications for different themes*/ 
+/* Green */ 
+.greenThemeMainText{
+    color: var(--greenMainText); 
+}
+
+.greenThemeAccentText{
+    color: var(--greenAccentText); 
+}
+
+.greenThemeBg{
+    background-color: var(--greenbg);
+}
+
+.greenThemeAccentBorder{
+    border-color: var(--greenAccentText) !important; 
+}
+
+.greenThemeMainBorder{
+    border-color: var(--greenMainText); 
+}
+
+.greenThemeHover:hover{
+    color: var(--greenAccentText); 
+}
+
+.greenThemeCol1{
+    background-color: var(--green1);
+}
+.greenThemeCol2{
+    background-color: var(--green2);
+}
+.greenThemeCol3{
+    background-color: var(--green3);
+}
+.greenThemeCol4{
+    background-color: var(--green4);
+}
+.greenThemeCol5{
+    background-color: var(--green5);
+}
+
+/* Orange */ 
+.orangeThemeMainText{
+    color: var(--orangeMainText); 
+}
+
+.orangeThemeAccentText{
+    color: var(--orangeAccentText); 
+}
+
+.orangeThemeBg{
+    background-color: var(--orangebg);
+}
+
+.orangeThemeAccentBorder{
+    border-color: var(--orangeAccentText) !important; 
+}
+
+.orangeThemeMainBorder{
+    border-color: var(--orangeMainText); 
+}
+
+.orangeThemeHover:hover{
+    color: var(--orangeAccentText); 
+}
+
+.orangeThemeCol1{
+    background-color: var(--orange1);
+}
+.orangeThemeCol2{
+    background-color: var(--orange2);
+}
+.orangeThemeCol3{
+    background-color: var(--orange3);
+}
+.orangeThemeCol4{
+    background-color: var(--orange4);
+}
+.orangeThemeCol5{
+    background-color: var(--orange5);
+}
+
+/* Purple */ 
+.purpleThemeMainText{
+    color: var(--purpleMainText); 
+}
+
+.purpleThemeAccentText{
+    color: var(--purpleAccentText); 
+}
+
+.purpleThemeBg{
+    background-color: var(--purplebg);
+}
+
+.purpleThemeAccentBorder{
+    border-color: var(--purpleAccentText) !important; 
+}
+
+.purpleThemeMainBorder{
+    border-color: var(--purpleMainText); 
+}
+
+.purpleThemeHover:hover{
+    color: var(--purpleAccentText); 
+}
+
+.purpleThemeCol1{
+    background-color: var(--purple1);
+}
+.purpleThemeCol2{
+    background-color: var(--purple2);
+}
+.purpleThemeCol3{
+    background-color: var(--purple3);
+}
+.purpleThemeCol4{
+    background-color: var(--purple4);
+}
+.purpleThemeCol5{
+    background-color: var(--purple5);
+}
+
+/* Blue */ 
+.blueThemeMainText{
+    color: var(--blueMainText); 
+}
+
+.blueThemeAccentText{
+    color: var(--blueAccentText); 
+}
+
+.blueThemeBg{
+    background-color: var(--bluebg);
+}
+
+.blueThemeAccentBorder{
+    border-color: var(--blueAccentText) !important; 
+}
+
+.blueThemeMainBorder{
+    border-color: var(--blueMainText); 
+}
+
+.blueThemeHover:hover{
+    color: var(--blueAccentText); 
+} 
+
+.blueThemeCol1{
+    background-color: var(--blue1);
+}
+.blueThemeCol2{
+    background-color: var(--blue2);
+}
+.blueThemeCol3{
+    background-color: var(--blue3);
+}
+.blueThemeCol4{
+    background-color: var(--blue4);
+}
+.blueThemeCol5{
+    background-color: var(--blue5);
+}

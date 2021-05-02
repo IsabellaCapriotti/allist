@@ -135,6 +135,7 @@ nav{
     margin-bottom: 8%; 
 }
 
+
 /* Pop up window for theme select */ 
 .screenOverlay{
     background-color: rgba(0,0,0,.5); 
@@ -374,4 +375,4 @@ nav{
 
 .blueThemeHover:hover{
     color: var(--blueAccentText); 
-}
+} 

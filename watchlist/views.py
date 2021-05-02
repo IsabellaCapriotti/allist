@@ -344,7 +344,7 @@ def edititem(request):
 
 # View to find list items by a query string and return them as a JSON response
 def findItemsByQuery(request):
-    
+    print(request)
     # Check if the user is authenticated
     if not request.user.is_authenticated:
         return redirect('/signup/')
@@ -358,7 +358,9 @@ def findItemsByQuery(request):
                 foundItems = ListItem.objects.filter(itemType=request.POST['itemType'], user=request.user)
             else:
                 foundItems = ListItem.objects.filter(itemType=request.POST['itemType'], user=request.user, isArchived=False)
-
+    # Archive status
+    elif 'isArchived' in request.POST:
+        foundItems = ListItem.objects.filter(user=request.user, isArchived=request.POST['isArchived']); 
     # Serialize items as JSON
     data = serializers.serialize("json", foundItems)
 
@@ -470,6 +472,16 @@ def getuserinfo(request):
     return HttpResponse(jsonRes)
 ############################################################################
 
+
+############################################################################
+# ARCHIVE
+def archive(request):
+    return render(request, 'watchlist/archive.html')
+
+
+############################################################################
+
+
 ############################################################################
 # UTILITY FUNCTIONS 
 def mergeSort(left, right, l): 
@@ -505,7 +517,7 @@ def mergeSort(left, right, l):
     while rightIdx < len(rightList):
         l[currIdx] = rightList[rightIdx]
         rightIdx += 1
-        rightIdx += 1
+        currIdx += 1
 
     return l[left:right]
     

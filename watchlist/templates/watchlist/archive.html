@@ -1,0 +1,31 @@
+<html lang='en'>
+<head>
+    {% load static %}
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allist</title>
+    <link rel="stylesheet" href="{% static 'watchlist/colorThemes.css' %}">
+    <link rel="stylesheet" href="{% static 'watchlist/archiveStyles.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&family=Didact+Gothic&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="pageContainer">
+        <div id="archiveHeader">
+            <div class="headerLetter">A</div>
+            <div class="headerLetter">R</div>
+            <div class="headerLetter">C</div>
+            <div class="headerLetter">H</div>
+            <div class="headerLetter">I</div>
+            <div class="headerLetter">V</div>
+            <div class="headerLetter">E</div>
+        </div>
+        <div class="timeline"></div>
+    </div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="{% static 'watchlist/archive.js' %}"></script>
+</body>

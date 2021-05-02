@@ -207,7 +207,6 @@ if(settingsBtn && settingsBar){
     }
 
     //***************************************************
-
     // Change theme
     const changeThemeBtn = document.getElementById("changeThemeBtn");
     const overlay = document.getElementById("hideTheme");
@@ -478,4 +477,14 @@ if(changeUsernameBtn){
 
         }); 
     }); 
+}
+
+/* View archive */
+const viewArchiveBtn = document.querySelector("#archiveBtn"); 
+if(viewArchiveBtn){
+
+    viewArchiveBtn.addEventListener( 'click', (e) => {
+        window.location = window.location.origin + '/archive/'; 
+    }); 
+
 }
