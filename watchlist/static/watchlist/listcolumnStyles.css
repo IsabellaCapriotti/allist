@@ -34,6 +34,14 @@
     background-color: var(--orange5);
 }
 
+.colsContainer h1{
+    font-family: 'Fredoka One', Helvetica, sans-serif;
+    margin-left: 8%;
+    margin-bottom: 2rem;
+    align-self: flex-start;
+    font-size: 2.5rem;
+}
+
 /* For small screens: display each list as an equal row*/ 
 @media only screen and (max-width: 870px){
 
@@ -47,12 +55,11 @@
     }
 }
 
-.colsContainer h1{
-    font-family: 'Fredoka One', Helvetica, sans-serif;
-    margin-left: 8%;
-    margin-bottom: 2rem;
-    align-self: flex-start;
-    font-size: 2.5rem;
+/* Adjustments for small screens */ 
+@media only screen and (max-height: 700px){
+    .colsContainer h1{
+        margin-bottom: 5px;
+    }
 }
 
 .centeredCol{
