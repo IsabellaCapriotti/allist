@@ -194,9 +194,9 @@ def additem(request):
     # Create new ListItem based on POST data
     newItem = ListItem()
     newItem.itemType = request.POST['itemType']
-    newItem.title = request.POST['title']
-    newItem.url = request.POST['url']
-    newItem.notes = request.POST['notes']
+    newItem.title = decode(request.POST['title'])
+    newItem.url = decode(request.POST['url'])
+    newItem.notes = decode(request.POST['notes'])
     newItem.isProfileHidden = request.POST['isProfileHidden']
     newItem.user = request.user
 
@@ -205,7 +205,6 @@ def additem(request):
 
     # Save new item in database
     newItem.save()
-    print('new item visibility flag ' + str(newItem.isProfileHidden))
 
     # Create profile activity for this item's creation
     newProfileActivity = ProfileActivity()
@@ -220,7 +219,7 @@ def additem(request):
     newProfileActivity.save()
 
     # Send new item back to page to render
-    response = '<div class="colItem" id="' + str(newItem.id) + '"><h3>' + newItem.title + '</h3></div>' 
+    response = '<div class="colItem" id="' + str(newItem.id) + '"><h3>' + decode(newItem.title) + '</h3></div>' 
     return HttpResponse(response)
 
 
@@ -320,9 +319,9 @@ def edititem(request):
     if foundItem.title != itemData['title']:
         titleChanged = True
 
-    foundItem.title = itemData['title']
-    foundItem.url = itemData['url']
-    foundItem.notes = itemData['notes']
+    foundItem.title = decode(itemData['title'])
+    foundItem.url = decode(itemData['url'])
+    foundItem.notes = decode(itemData['notes'])
 
     if itemData['isProfileHidden'] == 'True': 
         foundItem.isProfileHidden = True
@@ -334,10 +333,8 @@ def edititem(request):
     # Update profile activity for this item if title has changed
     if titleChanged: 
         profileActivities = ProfileActivity.objects.filter(listItem=foundItem)
-        print(profileActivities)
         for activity in profileActivities: 
-            print(activity)
-            activity.itemName = itemData['title']
+            activity.itemName = decode(itemData['title'])
             activity.save()
 
     return HttpResponse("edit item")
@@ -499,10 +496,14 @@ def mergeSort(left, right, l):
     rightIdx = 0 
 
     while leftIdx < len(leftList) and rightIdx < len(rightList):
-
-        if leftList[leftIdx].date >= rightList[rightIdx].date:
+        if (leftList[leftIdx].date > rightList[rightIdx].date):
             l[currIdx] = leftList[leftIdx]
             leftIdx += 1
+
+        elif  (leftList[leftIdx].date == rightList[rightIdx].date) and (leftList[leftIdx].activityType == 'f' and rightList[rightIdx].activityType == 's'): 
+            l[currIdx] = leftList[leftIdx]
+            leftIdx += 1
+           
         else:
             l[currIdx] = rightList[rightIdx]
             rightIdx += 1
@@ -522,10 +523,29 @@ def mergeSort(left, right, l):
     return l[left:right]
     
 
-
+# Checks if the passed string is a valid username or password
 def isValidUsernameOrPassword(un, pw=False):
     if pw:
-        regex = re.compile("^[a-z0-9_-]{10,30}$")
+        regex = re.compile("^[a-zA-Z0-9_-]{10,30}$")
     else:
-        regex = re.compile("^[a-z0-9_-]{3,30}$")
+        regex = re.compile("^[a-zA-Z0-9_-]{3,30}$")
     return re.fullmatch(regex, un)
+
+
+# Decodes string into display format
+def decode(string):
+
+    def subMatch(match):
+
+        conversions = {
+            'amp;': '&',
+            'quot;':'"' ,
+            '#x27;': "'",
+            '#x2F;': "/",
+        }
+
+        if match.group(0) in conversions: 
+            return conversions[match.group(0)]
+
+    return re.sub("amp;|#x2F;|#x27;|quot;", subMatch, string)
+   

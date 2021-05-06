@@ -109,9 +109,10 @@ submitBtn.addEventListener('click', (e) => {
     }
 
 
-    const title = sanitize(document.querySelector("#id_title").value);
-    const url = sanitize(document.querySelector("#id_url").value, true); 
-    const notes = sanitize(document.querySelector("#id_notes").value); 
+    //const title = sanitize(document.querySelector("#id_title").value);
+    const title = encodeURI(sanitize(document.querySelector("#id_title").value)); 
+    const url = encodeURI(document.querySelector("#id_url").value, true); 
+    const notes = encodeURI(document.querySelector("#id_notes").value); 
     const isProfileHidden = document.querySelector("#id_isProfileHidden"); 
     let isProfileHiddenVal = "False"; 
     if(isProfileHidden.checked){
@@ -124,8 +125,9 @@ submitBtn.addEventListener('click', (e) => {
     xhttp.open('POST', destination, true);     
     xhttp.setRequestHeader('X-CSRFToken', csrf_token); 
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send(`itemType=${itemType}&title=${title}&notes=${notes}&url=${url}&isProfileHidden=${isProfileHiddenVal}`); 
-  
+    let req = `itemType=${itemType}&title=${title}&notes=${notes}&url=${url}&isProfileHidden=${isProfileHiddenVal}`; 
+    xhttp.send(req); 
+
     // Get response and render it on the page as a new list item
 
     let response = ''; 
@@ -185,36 +187,31 @@ function getCookie(name){
 // Utility function to sanitize user input
 function sanitize(string, url=false) {
 
-    let map = {}; 
-    let reg; 
+    let map = {
+        '&': 'amp;',
+        '<': 'lt;',
+        '>': 'gt;',
+        '"': 'quot;',
+        "'": '#x27;',
+        "/": '#x2F;',
+    };
+    let reg = /[&<>"'/]/ig;
 
-    if(url){
-        map = {
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#x27;',
-        };
-        reg = /[<>"']/ig;
-    }
-
-    else{
-        map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#x27;',
-            "/": '&#x2F;',
-        };
-        reg = /[&<>"'/]/ig;
-
-    }
 
     return string.replace(reg, (match)=>(map[match]));
 }
 
+function decode(string){
+    map = {
+        'amp;': '&',
+        'quot;':'"' ,
+        '#x27;': "'",
+        '#x2F;': "/",
+    };
+    reg = /(amp;|quot;|#x27;|#x2F;)/ig;
 
+    return string.replace(reg, (match) => (map[match])); 
+}
 
 // Utility function to get parent column name
 function getParentColumnName(element){
@@ -446,9 +443,9 @@ editBtn.addEventListener( 'click', (e) => {
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         // Get form data to send with request
-        let title = sanitize(titleInput.value); 
-        let url = sanitize(urlInput.value, true); 
-        let notes = sanitize(notesInput.value);
+        let title = encodeURI(sanitize(titleInput.value)); 
+        let url = encodeURI(sanitize(urlInput.value, true)); 
+        let notes = encodeURI(sanitize(notesInput.value));
         let id = itemID; 
         if(isProfileHidden.checked){
             visibilityValue = "True"; 
@@ -465,7 +462,8 @@ editBtn.addEventListener( 'click', (e) => {
             if(this.readyState == 4 && this.status == 200){
                 // Get matching column item, change text
                 const columnItem = document.getElementById(itemID); 
-                columnItem.innerText = title; 
+                const header = columnItem.querySelector("h3"); 
+                header.innerText = decode(titleInput.value); 
             }
         });
 
